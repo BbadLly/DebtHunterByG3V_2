@@ -100,10 +100,10 @@ public class AddToBoardServlet extends HttpServlet {
             request.setAttribute("cost", cost);
             request.setAttribute("userEmail", u.getEmail());
 
-            request.getRequestDispatcher("/WEB-INF/TestAdd.jsp").forward(request, response);
+            request.getRequestDispatcher("/TestAdd.jsp").forward(request, response);
         } else {
             request.setAttribute("message", "Try again!!");
-            request.getRequestDispatcher("/WEB-INF/Debt.jsp").forward(request, response);
+            request.getRequestDispatcher("/Debt.jsp").forward(request, response);
         }
     }
 

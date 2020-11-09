@@ -60,11 +60,11 @@ public class MainServlet extends HttpServlet {
 //            Cookie c1 = new Cookie("USER_NAME", userName);
 //            c1.setMaxAge(60 * 60 * 24);
 //            response.addCookie(c1);
-            request.getRequestDispatcher("/WEB-INF/Main.jsp").forward(request, response);
+            request.getRequestDispatcher("/Main.jsp").forward(request, response);
         }
         else {
             request.setAttribute("message", "Invalid Username or Password, Please try again.");
-            request.getRequestDispatcher("/Login/Login.jsp").forward(request, response);  
+            request.getRequestDispatcher("/Login.jsp").forward(request, response);  
         }
     }
 

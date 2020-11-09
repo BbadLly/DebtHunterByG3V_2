@@ -35,7 +35,7 @@ public class ProfileServlet extends HttpServlet {
         Users u = (Users) session.getAttribute("user") ;
         
         request.setAttribute("user", u);
-        request.getRequestDispatcher("/WEB-INF/Profile.jsp").forward(request, response);
+        request.getRequestDispatcher("/Profile.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
