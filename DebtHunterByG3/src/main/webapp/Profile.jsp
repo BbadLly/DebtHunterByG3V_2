@@ -12,9 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>${user.firstname} ${user.lastname}</h1> <a href="EditProfile"> Edit </a>
+        <h1>${user.firstname} ${user.lastname}</h1> <a href="EditProfile.jsp"> Edit </a>
         <p> ${user.email} </p>
         <p> ${user.tel} </p>
-        
+        <a href="Main.jsp"> Back</a>
     </body>
 </html>

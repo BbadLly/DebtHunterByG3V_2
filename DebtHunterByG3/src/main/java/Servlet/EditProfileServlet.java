@@ -5,17 +5,27 @@
  */
 package Servlet;
 
+import Database.DatabaseConnection;
+import Entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author GuideKai
  */
+@WebServlet(name = "EditProfileServlet", urlPatterns = {"/EditProfile"})
 public class EditProfileServlet extends HttpServlet {
 
     /**
@@ -29,6 +39,27 @@ public class EditProfileServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession() ;
+        Users u = (Users) session.getAttribute("user") ;
+        String fname = request.getParameter("firstname") ;
+        String lname = request.getParameter("lastname") ;
+        String tel = request.getParameter("tel") ;
+        String sql = "UPDATE Users SET Firstname = ?, Lastname = ?, Tel = ? WHERE ID = ? "  ;
+         try ( Connection conn = DatabaseConnection.getConn();  
+                    PreparedStatement stm = conn.prepareStatement(sql)) {
+                stm.setString(1, fname);
+                stm.setString(2, lname);
+                stm.setString(3, tel);
+                stm.setInt(4, u.getId());
+                stm.executeUpdate();
+       
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        request.setAttribute("user", u);
         request.getRequestDispatcher("/Profile.jsp").forward(request, response);
     }
 

@@ -24,9 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 /**
  *
- * @author GuideKai
+ * @author inwle
  */
 public class AddToBoardServlet extends HttpServlet {
 
@@ -41,7 +42,7 @@ public class AddToBoardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
         String debtName = request.getParameter("debtname");
         String debtMail = request.getParameter("email");
@@ -64,11 +65,6 @@ public class AddToBoardServlet extends HttpServlet {
                 stm.setInt(4, cost);
                 stm.setInt(5, u.getId());
                 stm.executeUpdate();
-
-                ResultSet rs = stm.getGeneratedKeys();
-                while (rs.next()) {
-                    d.setDebtId(rs.getInt(1));
-                }
 
                 conn.close();
 
@@ -145,5 +141,4 @@ public class AddToBoardServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

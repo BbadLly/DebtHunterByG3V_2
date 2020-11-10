@@ -12,8 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:include page="EditProfile" /> 
-        <form action="EditProfile" method="">
+        <jsp:include page="EditProfile.jsp" /> 
+        <form action="EditProfile" method="POST">
         Password: <input type="password" name="password" required /> 
         </form>
     </body>

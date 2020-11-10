@@ -13,11 +13,12 @@
     </head>
     <body>
         <h1>Edit Profile</h1>
-        <form action="ConfirmedEdit.jsp" method="POST">
-            <p>First Name  <input type="text" name="firstname" value="" required/> </p>
-            <p>Last Name  <input type="text" name="lastname" value="" required/> </p>
+        <form action="EditProfile" method="POST">
+            <p>First Name  <input type="text" name="firstname" value="" /> </p>
+            <p>Last Name  <input type="text" name="lastname" value="" /> </p>
             <p>Tel.  <input type="text" name="tel" value=""/> </p> 
             <p><input type="Submit" name="Confirm"> </p> 
         </form>
+        <a href="Profile.jsp"> Back</a>
     </body>
 </html>
