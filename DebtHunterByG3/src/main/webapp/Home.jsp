@@ -12,7 +12,7 @@
         <title>Debt Hunter - Home</title>
     </head>
     <body>
-        <br><a href="Login2.jsp">Log in</a>
+        <br><a href="Login.jsp">Log in</a>
         <br><a href="Register.jsp">Sign up</a> 
         ${test}
     </body>
