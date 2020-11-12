@@ -79,10 +79,9 @@ public class TestServlet extends HttpServlet {
 //            request.getRequestDispatcher("/WEB-INF/ShowBoard.jsp").forward(request, response); 
            
         for (Debts debts : dl) {
-            if(u.getEmail().equals(debts.getDebtorMail())) {
                 request.setAttribute("collectors", dl);
                 request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
-            }
+    
         }
     }
 
