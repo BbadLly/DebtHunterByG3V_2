@@ -5,7 +5,6 @@ Entity\Paymenthistory_.class
 Entity\Debts_.class
 Servlet\AddToBoardServlet.class
 Servlet\RegisterServlet.class
-Servlet\TestServlet.class
 Servlet\ProfileServlet.class
 Servlet\LoginServlet.class
 EntityController\exceptions\PreexistingEntityException.class

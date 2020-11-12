@@ -6,6 +6,7 @@ C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\E
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\EntityController\DebtsJpaController.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\AddUserToDBServlet.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\EditProfileServlet.java
+C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\PaymentServlet.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\LoginServlet.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\EntityController\UsersJpaController.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Database\DatabaseConnection.java
@@ -17,5 +18,4 @@ C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\E
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Entity\Debts.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\AddDebtServlet.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\MainServlet.java
-C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\TestServlet.java
 C:\Users\inwle\Documents\GitHub\DebtHunterByG3V_2\DebtHunterByG3\src\main\java\Servlet\AddToBoardServlet.java
