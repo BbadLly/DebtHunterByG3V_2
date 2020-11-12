@@ -52,11 +52,11 @@
                                         
                                         <div class="form-holder">
 						<span class="lnr lnr-user"></span>
-						<input type="text" class="form-control" placeholder="firstname" required/>
+						<input type="text" class="form-control" placeholder="firstname" name="firstname" required/>
 					</div>
                                         <div class="form-holder">
 						<span class="lnr lnr-user"></span>
-						<input type="text" class="form-control" placeholder="lastname" required/>
+						<input type="text" class="form-control" placeholder="lastname" name="lastname" required/>
 					</div>
                                         <div class="form-holder">
 						<span class="lnr lnr-phone-handset"></span>
