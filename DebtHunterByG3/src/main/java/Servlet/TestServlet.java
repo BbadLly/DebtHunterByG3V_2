@@ -68,6 +68,7 @@ public class TestServlet extends HttpServlet {
                 d.setDebtorMail(rs.getString("debtor_mail"));
                 d.setDescription(rs.getString("description"));
                 d.setCost(rs.getInt("cost"));
+                d.setDate(rs.getDate("date"));
                 dl.add(d);
             }
         } catch (Exception ex) {
@@ -77,11 +78,11 @@ public class TestServlet extends HttpServlet {
 //            request.setAttribute("debts", dl);
 //            request.getRequestDispatcher("/WEB-INF/ShowBoard.jsp").forward(request, response); 
            
-        for (Debts debts : dl) {
+//        for (Debts debts : dl) {
                 request.setAttribute("collectors", dl);
                 request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
             
-        }
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

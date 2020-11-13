@@ -11,10 +11,12 @@ import Entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -42,21 +44,25 @@ public class AddToBoardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
         String debtName = request.getParameter("debtname");
         String debtMail = request.getParameter("email");
         String description = request.getParameter("description");
         String c = request.getParameter("cost");
+        String da = request.getParameter("date");
+        Date date = Date.valueOf(da) ;
         int cost = Integer.parseInt(c);
 //        Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class)
 //                .setParameter("email", debtMail).getSingleResult() ;        
         HttpSession session = request.getSession();
         Users u = (Users) session.getAttribute("user");
         if (u != null) {
-              String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST, USERS_ID) VALUES (?, ?, ?, ?, ?)";
+              String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST, USERS_ID, DATE) VALUES (?, ?, ?, ?, ?, ?)";
 //            String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST) VALUES (?, ?, ?, ?)";
             Debts d = new Debts();
+            
+            
             try ( Connection conn = DatabaseConnection.getConn();  
                     PreparedStatement stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 stm.setString(1, debtName);
@@ -64,6 +70,7 @@ public class AddToBoardServlet extends HttpServlet {
                 stm.setString(3, description);
                 stm.setInt(4, cost);
                 stm.setInt(5, u.getId());
+                stm.setDate(6, date);
                 stm.executeUpdate();
 
                 conn.close();
@@ -95,6 +102,7 @@ public class AddToBoardServlet extends HttpServlet {
             request.setAttribute("description", description);
             request.setAttribute("cost", cost);
             request.setAttribute("userEmail", u.getEmail());
+            request.setAttribute("date", date);
 
             request.getRequestDispatcher("/TestAdd.jsp").forward(request, response);
         } else {

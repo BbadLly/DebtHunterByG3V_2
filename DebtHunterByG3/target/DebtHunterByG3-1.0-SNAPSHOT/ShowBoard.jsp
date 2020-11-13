@@ -19,6 +19,7 @@
             <p> <c:out value="${d.debtorMail}"> </c:out></p>
             <p> <c:out value="${d.description}"> </c:out></p>
             <p> <c:out value="${d.cost}"> </c:out></p>
+            <p> <c:out value="${d.date}"> </c:out></p>
 <!--            <p> <c:out value="${d}"> </c:out></p>-->
         </c:forEach>
 
@@ -28,6 +29,7 @@
             <p> <c:out value="${c.debtorMail}"> </c:out></p>
             <p> <c:out value="${c.description}"> </c:out></p>
             <p> <c:out value="${c.cost}"> </c:out></p>
+            <p> <c:out value="${c.date}"> </c:out></p>
 <!--            <p> <c:out value="${c}"> </c:out></p>-->
         </c:forEach>
     </body>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Debt
-    Created on : Oct 22, 2020, 3:33:30 PM
+    Document   : Register
+    Created on : Oct 13, 2020, 8:57:45 PM
     Author     : GuideKai
 --%>
 
@@ -8,22 +8,52 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Debt Hunter - Main</title>
+       <meta charset="utf-8">
+		<title>Debt Hunter - Main</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- LINEARICONS -->
+		<link rel="stylesheet" href="Regis/fonts/linearicons/style.css">
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="Regis/css/style.css">
+                 
     </head>
     <body>
-        <form action="AddToBoard" method="POST">
-            Debt  
-            <p>Debt name </p>
-            <p><input type="text" name="debtname" value="" required/></p>
-            <p>Debtor </p>
-            <p><input type="email" name="email" value="" required/></p>
-            <p>Description </p>
-            <p><input type="text" name="description" value=""></p>
-            <p>Cost</p>
-            <p><input type="number" name="cost" value="" required/></p>
-            <p><input type="submit" name="Add"></p>  
-            ${message}
+        <div class="wrapper">
+			<div class="inner">
+				<form action="AddToBoard" method="POST">
+                             <div class="form-holder">
+						
+						<input type="text" class="form-control" placeholder="Debtname" name="debtname"  value="" required/>
+					</div>
+                                        <div class="form-holder">
+						
+						<input type="email" class="form-control" placeholder="Debtor" name="email" value="" required/>
+					</div>
+					<div class="form-holder">
+						
+						<input type="text" class="form-control" placeholder="Description" name="description" value="" required/>
+					</div>
+                                        
+                                        
+                                        <div class="form-holder">
+						
+						<input type="number" class="form-control" placeholder="Cost" name="cost" value="" required/>
+					</div>
+                                        <div class="form-holder">
+						<label for="start">Within date!!</label>
+                                            <input type="date" name="date" min="1999-01-01" max="2050-12-31"/>
+					</div>
+                                        
+                                        <button type="submit" name="Accept">
+						<span>ADD</span>
+					</button>
         </form>
+			</div>
+			
+		</div>
+                    <script src="Regis/js/jquery-3.3.1.min.js"></script>
+                    <script src="Regis/js/main.js"></script>
     </body>
 </html>

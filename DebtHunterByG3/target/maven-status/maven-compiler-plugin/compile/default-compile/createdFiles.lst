@@ -14,10 +14,12 @@ Servlet\EditProfileServlet.class
 EntityController\exceptions\IllegalOrphanException.class
 EntityController\UsersJpaController.class
 Entity\Users_.class
+Model\Date.class
 Entity\Debts.class
 Servlet\AddUserToDBServlet.class
 Servlet\MainServlet.class
 Database\TestDB.class
 Entity\Users.class
 EntityController\PaymenthistoryJpaController.class
+Servlet\HomeServlet.class
 EntityController\exceptions\NonexistentEntityException.class

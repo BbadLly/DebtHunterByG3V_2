@@ -33,7 +33,7 @@
     <body>
         <div class="wrapper">
 			<div class="inner">
-				<img src="Regis/images/image-1.png" alt="" class="image-1">
+<!--				<img src="Regis/images/image-1.png" alt="" class="image-1">-->
 				<form action="AddUserToDB" method="POST">
 					<h3>New Account?</h3>
                                         <div class="form-holder">

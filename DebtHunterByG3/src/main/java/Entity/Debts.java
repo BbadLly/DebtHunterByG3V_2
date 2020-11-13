@@ -6,6 +6,7 @@
 package Entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,22 +20,28 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author GuideKai
+ * @author KaiNiYam
  */
 @Entity
 @Table(name = "DEBTS")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Debts.findAll", query = "SELECT d FROM Debts d"),
     @NamedQuery(name = "Debts.findByDebtId", query = "SELECT d FROM Debts d WHERE d.debtId = :debtId"),
     @NamedQuery(name = "Debts.findByDebtName", query = "SELECT d FROM Debts d WHERE d.debtName = :debtName"),
     @NamedQuery(name = "Debts.findByDebtorMail", query = "SELECT d FROM Debts d WHERE d.debtorMail = :debtorMail"),
     @NamedQuery(name = "Debts.findByDescription", query = "SELECT d FROM Debts d WHERE d.description = :description"),
-    @NamedQuery(name = "Debts.findByCost", query = "SELECT d FROM Debts d WHERE d.cost = :cost")})
+    @NamedQuery(name = "Debts.findByCost", query = "SELECT d FROM Debts d WHERE d.cost = :cost"),
+    @NamedQuery(name = "Debts.findByDate", query = "SELECT d FROM Debts d WHERE d.date = :date")})
 public class Debts implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +69,9 @@ public class Debts implements Serializable {
     @NotNull
     @Column(name = "COST")
     private int cost;
+    @Column(name = "DATE")
+    @Temporal(TemporalType.DATE)
+    private Date date;
     @OneToMany(mappedBy = "debtsDebtId")
     private List<Paymenthistory> paymenthistoryList;
     @JoinColumn(name = "USERS_ID", referencedColumnName = "ID")
@@ -123,6 +133,15 @@ public class Debts implements Serializable {
         this.cost = cost;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @XmlTransient
     public List<Paymenthistory> getPaymenthistoryList() {
         return paymenthistoryList;
     }
