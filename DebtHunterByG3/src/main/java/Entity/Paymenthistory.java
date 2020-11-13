@@ -19,15 +19,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author KaiNiYam
+ * @author inwle
  */
 @Entity
 @Table(name = "PAYMENTHISTORY")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Paymenthistory.findAll", query = "SELECT p FROM Paymenthistory p"),
     @NamedQuery(name = "Paymenthistory.findByPaymentId", query = "SELECT p FROM Paymenthistory p WHERE p.paymentId = :paymentId"),

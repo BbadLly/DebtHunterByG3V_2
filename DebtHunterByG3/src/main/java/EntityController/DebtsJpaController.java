@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author GuideKai
+ * @author inwle
  */
 public class DebtsJpaController implements Serializable {
 

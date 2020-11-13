@@ -364,7 +364,7 @@
   border: 1px solid #e6e6e6;
   border-radius: 25px;
 }
-  }
+  
     </style>
  
       <link rel="stylesheet" type="text/css" href="assetsHome/css/Scrollbars.css" />

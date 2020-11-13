@@ -24,16 +24,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KaiNiYam
+ * @author inwle
  */
 @Entity
 @Table(name = "DEBTS")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Debts.findAll", query = "SELECT d FROM Debts d"),
     @NamedQuery(name = "Debts.findByDebtId", query = "SELECT d FROM Debts d WHERE d.debtId = :debtId"),
@@ -141,7 +138,6 @@ public class Debts implements Serializable {
         this.date = date;
     }
 
-    @XmlTransient
     public List<Paymenthistory> getPaymenthistoryList() {
         return paymenthistoryList;
     }
