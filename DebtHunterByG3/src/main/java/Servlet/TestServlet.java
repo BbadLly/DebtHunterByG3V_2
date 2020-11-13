@@ -7,6 +7,7 @@ package Servlet;
 
 import Database.DatabaseConnection;
 import Entity.Debts;
+import static Entity.Debts_.debtId;
 import Entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,10 +85,9 @@ public class TestServlet extends HttpServlet {
                 dl.add(d);
             }
             
-            for (Debts debts : dl) {
                 request.setAttribute("debts", dl);
                 request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
-            }
+
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -105,22 +105,18 @@ public class TestServlet extends HttpServlet {
 //                ResultSet rs = ps.executeQuery();
 //                dl.add(debts) ;
 //            }
-            Debts d = new Debts() ;
-            ps.setString(1, d.getDebtorMail());
+            Debts d = new Debts() ;            
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                
                 d.setDebtName(rs.getString("debt_name"));
                 d.setDescription(rs.getString("description"));
                 d.setCost(rs.getInt("cost"));
-//                
+                ps.setString(1, d.getDebtorMail());  
                 dl.add(d);
             }
             
-            for (Debts debts : dl) {
                 request.setAttribute("collectors", dl);
                 request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
-            }
         } catch (Exception ex) {
             System.out.println(ex);
         }
