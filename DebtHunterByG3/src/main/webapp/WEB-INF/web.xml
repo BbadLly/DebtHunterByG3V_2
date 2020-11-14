@@ -4,9 +4,33 @@
         <servlet-name>AddToBoardServlet</servlet-name>
         <servlet-class>Servlet.AddToBoardServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PaidServlet</servlet-name>
+        <servlet-class>Servlet.PaidServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetCostServlet</servlet-name>
+        <servlet-class>Servlet.GetCostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CostServlet</servlet-name>
+        <servlet-class>Servlet.CostServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddToBoardServlet</servlet-name>
         <url-pattern>/AddToBoard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaidServlet</servlet-name>
+        <url-pattern>/Paid</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetCostServlet</servlet-name>
+        <url-pattern>/GetCost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CostServlet</servlet-name>
+        <url-pattern>/Cost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

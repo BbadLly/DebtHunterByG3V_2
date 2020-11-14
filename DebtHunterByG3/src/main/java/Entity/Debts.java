@@ -34,7 +34,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Debts.findByDebtName", query = "SELECT d FROM Debts d WHERE d.debtName = :debtName"),
     @NamedQuery(name = "Debts.findByDebtorMail", query = "SELECT d FROM Debts d WHERE d.debtorMail = :debtorMail"),
     @NamedQuery(name = "Debts.findByDescription", query = "SELECT d FROM Debts d WHERE d.description = :description"),
-    @NamedQuery(name = "Debts.findByCost", query = "SELECT d FROM Debts d WHERE d.cost = :cost")})
+    @NamedQuery(name = "Debts.findByCost", query = "SELECT d FROM Debts d WHERE d.cost = :cost"),
+    @NamedQuery(name = "Debts.findByDate", query = "SELECT d FROM Debts d WHERE d.date = :date")})
 public class Debts implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +63,8 @@ public class Debts implements Serializable {
     @NotNull
     @Column(name = "COST")
     private int cost;
+    @Column(name = "DATE")
+    private Boolean date;
     @OneToMany(mappedBy = "debtsDebtId")
     private List<Paymenthistory> paymenthistoryList;
     @JoinColumn(name = "USERS_ID", referencedColumnName = "ID")
@@ -121,6 +124,14 @@ public class Debts implements Serializable {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public Boolean getDate() {
+        return date;
+    }
+
+    public void setDate(Boolean date) {
+        this.date = date;
     }
 
     public List<Paymenthistory> getPaymenthistoryList() {

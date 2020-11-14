@@ -35,9 +35,9 @@ public class PayServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession() ;
         String id = request.getParameter("debtId") ;
-                
-        Debts d = (Debts) session.getAttribute("d") ;
-        
+//                
+//        Debts d = (Debts) session.getAttribute("d") ;
+        request.setAttribute("id", id);
         request.getRequestDispatcher("/Pay.jsp").forward(request, response);
     }
 

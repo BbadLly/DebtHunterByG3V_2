@@ -5,13 +5,25 @@
  */
 package Servlet;
 
+import Database.DatabaseConnection;
+import Entity.Debts;
+import Entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,18 +43,35 @@ public class CollectorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CollectorServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CollectorServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+          EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+
+        HttpSession session = request.getSession();
+        Users u = (Users) session.getAttribute("user");
+
+        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?";
+
+        List<Debts> dl = new ArrayList();
+        try {
+            Connection conn = DatabaseConnection.getConn();
+            PreparedStatement ps = conn.prepareStatement(sql2);
+
+            ps.setString(1, u.getEmail());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Debts d = new Debts();
+                d.setDebtId(rs.getInt("debt_id"));
+                d.setDebtName(rs.getString("debt_name"));
+                d.setDebtorMail(rs.getString("debtor_mail"));
+                d.setDescription(rs.getString("description"));
+                d.setCost(rs.getInt("cost"));
+                dl.add(d);
+            }
+
+            request.setAttribute("collectors", dl);
+            request.getRequestDispatcher("/Collector.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
     }
 

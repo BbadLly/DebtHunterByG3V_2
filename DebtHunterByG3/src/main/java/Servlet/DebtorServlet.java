@@ -5,13 +5,25 @@
  */
 package Servlet;
 
+import Database.DatabaseConnection;
+import Entity.Debts;
+import Entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,19 +43,38 @@ public class DebtorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DebtorServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DebtorServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+
+        HttpSession session = request.getSession();
+        Users u = (Users) session.getAttribute("user"); 
+       
+
+        String sql1 = "Select * from Debts d WHERE USERS_ID = ?" ;
+       
+        List<Debts> dl = new ArrayList();
+        try {
+            Connection conn = DatabaseConnection.getConn();
+            PreparedStatement ps = conn.prepareStatement(sql1);
+            
+            ps.setInt(1, u.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Debts d = new Debts() ;
+                d.setDebtId(rs.getInt("debt_id"));
+                d.setDebtName(rs.getString("debt_name"));
+                d.setDebtorMail(rs.getString("debtor_mail"));
+                d.setDescription(rs.getString("description"));
+                d.setCost(rs.getInt("cost"));
+//                
+                dl.add(d);
+                
+                request.setAttribute("debts", dl);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } 
+        request.getRequestDispatcher("/Debtor.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

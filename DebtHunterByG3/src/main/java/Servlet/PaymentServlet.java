@@ -47,43 +47,44 @@ public class PaymentServlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
-        String c = request.getParameter("cost");
-        int cost = Integer.parseInt(c);
+        
+        int id = Integer.parseInt(request.getParameter("id")) ;
+        int pay = Integer.parseInt(request.getParameter("pay"));
+        
         HttpSession session = request.getSession();
         Users u = (Users) session.getAttribute("user");
+        
         Paymenthistory ph = new Paymenthistory();
+        Debts d = em.find(Debts.class, id) ;
+        
+        String update = "UPDATE DEBTS SET Cost = ? WHERE Debt_ID = ? ";
+        try ( Connection conn = DatabaseConnection.getConn();  PreparedStatement stm = conn.prepareStatement(update)) {
+            stm.setInt(1, (d.getCost() - pay));
+            stm.setInt(2, id);
 
-        if (u != null) {
-            String insert = "INSERT INTO PAYMENTHISTORY (COST, DEBTS_DEBT_ID) VALUES (?, ?, ?, ?, ?)";
-//            String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST) VALUES (?, ?, ?, ?)";
-            Debts d = new Debts();
-            try ( Connection conn = DatabaseConnection.getConn();  PreparedStatement stm = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
-                stm.setInt(1, cost);
-                stm.setInt(2, d.getDebtId());
+            stm.executeUpdate();
 
-                stm.executeUpdate();
-
-                conn.close();
-
-            } catch (ClassNotFoundException ex) {
-                System.out.println(ex);
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            }
-
-            String sql = "UPDATE DEBTS SET Cost = ? WHERE Debt_ID = ? ";
-            try ( Connection conn = DatabaseConnection.getConn();  PreparedStatement stm = conn.prepareStatement(sql)) {
-                stm.setInt(1, d.getCost() - cost);
-                stm.setInt(2, d.getDebtId());
-
-                stm.executeUpdate();
-
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        String insert = "INSERT INTO PAYMENTHISTORY (COST, DEBTS_DEBT_ID) VALUES (?,?)";
+        try ( Connection conn = DatabaseConnection.getConn();  PreparedStatement stm = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
+            stm.setInt(1, pay);
+            stm.setInt(2, id);
+
+            stm.executeUpdate();
+
+            conn.close();
+
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        request.getRequestDispatcher("/Main.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
