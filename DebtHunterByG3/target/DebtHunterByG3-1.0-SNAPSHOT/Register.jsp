@@ -17,24 +17,50 @@
 		
 		<!-- STYLE CSS -->
 		<link rel="stylesheet" href="Regis/css/style.css">
-                 <script>
-                    function myfunction() {
-                    var pass1 = document.getElementById("password").value;
-                    var pass2 = document.getElementById("confirmed").value;
-                if (pass1 !== pass2) {
-                    alert("Passwords Do not match");
-                } else {
-                    alert("You're right !!");
-                }
-            }
-        ;
+                 <script type="text/javascript">
+
+  function checkForm(form)
+  {
+    if(form.password.value != "" && form.password.value == form.confirmed.value) {
+      if(form.password.value.length < 6) {
+        alert("Error: Password must contain at least six characters!");
+        form.password.focus();
+        return false;
+      }
+      re = /[0-9]/;
+      if(!re.test(form.password.value)) {
+        alert("Error: password must contain at least one number (0-9)!");
+        form.password.focus();
+        return false;
+      }
+      re = /[a-z]/;
+      if(!re.test(form.password.value)) {
+        alert("Error: password must contain at least one lowercase letter (a-z)!");
+        form.password.focus();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.password.value)) {
+        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+        form.password.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Please check that you've entered and confirmed your password!");
+      form.password.focus();
+      return false;
+    }
+
+    alert("Regis Successful");
+    return true;
+  }
         </script> 
     </head>
     <body>
         <div class="wrapper">
 			<div class="inner">
 <!--				<img src="Regis/images/image-1.png" alt="" class="image-1">-->
-				<form action="AddUserToDB" method="POST">
+				<form action="AddUserToDB" method="POST" onsubmit="return checkForm(this);">
 					<h3>New Account?</h3>
                                         <div class="form-holder">
 						<span class="lnr lnr-envelope"></span>
