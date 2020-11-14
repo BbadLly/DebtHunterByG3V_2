@@ -52,8 +52,6 @@ public class TestServlet extends HttpServlet {
        
 
         String sql1 = "Select * from Debts d WHERE USERS_ID = ?" ;
-//        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?" ;
-        String sql = "Select * from Debts d";
        
         List<Debts> dl = new ArrayList();
         try {
@@ -71,14 +69,12 @@ public class TestServlet extends HttpServlet {
                 d.setCost(rs.getInt("cost"));
 //                
                 dl.add(d);
-            }
-            
+                
                 request.setAttribute("debts", dl);
-                request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
-
+            }
         } catch (Exception ex) {
             System.out.println(ex);
-        }
+        } 
         
 //            request.setAttribute("debts", dl);
 //            request.getRequestDispatcher("/WEB-INF/ShowBoard.jsp").forward(request, response); 

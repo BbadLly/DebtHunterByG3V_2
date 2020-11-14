@@ -5,9 +5,15 @@
  */
 package Servlet;
 
+import Database.DatabaseConnection;
+import Entity.Debts;
 import Entity.Users;
 import static Entity.Users_.id;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,26 +46,64 @@ public class MainServlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
+        
         String userName = request.getParameter("email");
         String password = request.getParameter("password");
-//        int i = Integer.parseInt(userName) ;
-//        Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class)
-//                .setParameter("email", userName).getSingleResult() ;
-        Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class)
-                .setParameter("email", userName).getSingleResult() ;        
-//Users u = (Users) em.find(Users.class, 1) ;
-//        UsersJpaController uc =  new UsersJpaController(emf) ;
-//        Users u = uc.findUsersByEmail(userName);  
-//        System.out.println(u.toString());
+        
+        Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class).setParameter("email", userName).getSingleResult() ;        
+        
+        String sql1 = "Select * from Debts d WHERE USERS_ID = ?" ;
+       
+        List<Debts> dl = new ArrayList();
+        try {
+            Connection conn = DatabaseConnection.getConn();
+            PreparedStatement ps = conn.prepareStatement(sql1);
+            
+            ps.setInt(1, u.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Debts d = new Debts() ;
+                d.setDebtId(rs.getInt("debt_id"));
+                d.setDebtName(rs.getString("debt_name"));
+                d.setDebtorMail(rs.getString("debtor_mail"));
+                d.setDescription(rs.getString("description"));
+                d.setCost(rs.getInt("cost"));
+//                
+                dl.add(d);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } request.setAttribute("debts", dl);
+        
+//        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?";
+//
+//        List<Debts> dl2 = new ArrayList();
+//        try {
+//            Connection conn = DatabaseConnection.getConn();
+//            PreparedStatement ps = conn.prepareStatement(sql2);
+//
+//            ps.setString(1, u.getEmail());
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Debts d = new Debts();
+//                d.setDebtId(rs.getInt("debt_id"));
+//                d.setDebtName(rs.getString("debt_name"));
+//                d.setDebtorMail(rs.getString("debtor_mail"));
+//                d.setDescription(rs.getString("description"));
+//                d.setCost(rs.getInt("cost"));
+//                dl2.add(d);
+//            }
+//
+//            request.setAttribute("collectors", dl2);
+//            
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+        
         if (u != null && u.getPassword().equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", u);
             request.setAttribute("profile", u);
-//            request.setAttribute("fname", u.getFirstName);
-//            request.setAttribute("lname", u.getLastName);
-//            Cookie c1 = new Cookie("USER_NAME", userName);
-//            c1.setMaxAge(60 * 60 * 24);
-//            response.addCookie(c1);
             request.getRequestDispatcher("/Main.jsp").forward(request, response);
         }
         else {

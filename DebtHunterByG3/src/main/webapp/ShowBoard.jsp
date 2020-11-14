@@ -24,7 +24,7 @@
 
         <h1>Collector</h1>
         <c:forEach items= "${collectors}" var="c">
-            <p> <a href=""> ${c.id} </a> </p>
+            <p> <a href="Pay?debtId=" + ${c.debtId} > </a> </p>
             <p> <c:out value="${c.debtName}"> </c:out></p>
             <p> <c:out value="${c.debtorMail}"> </c:out></p>
             <p> <c:out value="${c.description}"> </c:out></p>

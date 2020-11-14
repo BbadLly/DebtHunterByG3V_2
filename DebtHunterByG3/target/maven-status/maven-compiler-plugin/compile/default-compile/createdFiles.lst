@@ -22,4 +22,5 @@ Database\TestDB.class
 Entity\Users.class
 EntityController\PaymenthistoryJpaController.class
 Servlet\Test2Servlet.class
+Servlet\PayServlet.class
 EntityController\exceptions\NonexistentEntityException.class

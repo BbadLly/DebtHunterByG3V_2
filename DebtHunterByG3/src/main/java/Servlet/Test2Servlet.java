@@ -45,32 +45,21 @@ public class Test2Servlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
-        
-        
 
         HttpSession session = request.getSession();
-        Users u = (Users) session.getAttribute("user"); 
-        
-        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?" ;
-        
+        Users u = (Users) session.getAttribute("user");
+
+        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?";
+
         List<Debts> dl = new ArrayList();
         try {
             Connection conn = DatabaseConnection.getConn();
             PreparedStatement ps = conn.prepareStatement(sql2);
-            
-//            for (Debts debts : dl) {
-//                ps.setInt(1, debts.getDebtId()) ;
-//                ps.setString(2, debts.getDebtName()) ;
-//                ps.setString(3, debts.getDebtorMail()) ;
-//                ps.setString(4, debts.getDescription()) ;
-//                ps.setInt(5, debts.getCost()) ;
-//                ResultSet rs = ps.executeQuery();
-//                dl.add(debts) ;
-//            }
-            ps.setString(1, u.getEmail()) ;              
+
+            ps.setString(1, u.getEmail());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Debts d = new Debts() ;
+                Debts d = new Debts();
                 d.setDebtId(rs.getInt("debt_id"));
                 d.setDebtName(rs.getString("debt_name"));
                 d.setDebtorMail(rs.getString("debtor_mail"));
@@ -78,9 +67,9 @@ public class Test2Servlet extends HttpServlet {
                 d.setCost(rs.getInt("cost"));
                 dl.add(d);
             }
-            
-                request.setAttribute("collectors", dl);
-                request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
+
+            request.setAttribute("collectors", dl);
+            request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -126,3 +115,13 @@ public class Test2Servlet extends HttpServlet {
     }// </editor-fold>
 
 }
+
+//            for (Debts debts : dl) {
+//                ps.setInt(1, debts.getDebtId()) ;
+//                ps.setString(2, debts.getDebtName()) ;
+//                ps.setString(3, debts.getDebtorMail()) ;
+//                ps.setString(4, debts.getDescription()) ;
+//                ps.setInt(5, debts.getCost()) ;
+//                ResultSet rs = ps.executeQuery();
+//                dl.add(debts) ;
+//            }
