@@ -20,46 +20,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author GuideKai
- */
 @WebServlet(name = "MainServlet", urlPatterns = {"/Main"})
 public class MainServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
         String userName = request.getParameter("email");
         String password = request.getParameter("password");
-//        int i = Integer.parseInt(userName) ;
-//        Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class)
-//                .setParameter("email", userName).getSingleResult() ;
         Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class)
                 .setParameter("email", userName).getSingleResult() ;        
-//Users u = (Users) em.find(Users.class, 1) ;
-//        UsersJpaController uc =  new UsersJpaController(emf) ;
-//        Users u = uc.findUsersByEmail(userName);  
-//        System.out.println(u.toString());
         if (u != null && u.getPassword().equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", u);
             request.setAttribute("profile", u);
-//            request.setAttribute("fname", u.getFirstName);
-//            request.setAttribute("lname", u.getLastName);
-//            Cookie c1 = new Cookie("USER_NAME", userName);
-//            c1.setMaxAge(60 * 60 * 24);
-//            response.addCookie(c1);
             request.getRequestDispatcher("/Main.jsp").forward(request, response);
         }
         else {

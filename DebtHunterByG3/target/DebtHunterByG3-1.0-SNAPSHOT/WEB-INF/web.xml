@@ -5,16 +5,16 @@
         <servlet-class>Servlet.AddToBoardServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>Servlet.HomeServlet</servlet-class>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>Servlet.ProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddToBoardServlet</servlet-name>
         <url-pattern>/AddToBoard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/Home</url-pattern>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/Profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
