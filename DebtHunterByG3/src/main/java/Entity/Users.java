@@ -69,6 +69,8 @@ public class Users implements Serializable {
     @Column(name = "TEL")
     private String tel;
     @OneToMany(mappedBy = "usersId")
+    private List<Paiddebts> paiddebtsList;
+    @OneToMany(mappedBy = "usersId")
     private List<Debts> debtsList;
 
     public Users() {
@@ -133,6 +135,14 @@ public class Users implements Serializable {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public List<Paiddebts> getPaiddebtsList() {
+        return paiddebtsList;
+    }
+
+    public void setPaiddebtsList(List<Paiddebts> paiddebtsList) {
+        this.paiddebtsList = paiddebtsList;
     }
 
     public List<Debts> getDebtsList() {

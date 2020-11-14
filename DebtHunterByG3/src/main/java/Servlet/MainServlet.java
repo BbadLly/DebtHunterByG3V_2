@@ -67,39 +67,13 @@ public class MainServlet extends HttpServlet {
                 d.setDebtName(rs.getString("debt_name"));
                 d.setDebtorMail(rs.getString("debtor_mail"));
                 d.setDescription(rs.getString("description"));
-                d.setCost(rs.getInt("cost"));
-//                
+                d.setCost(rs.getInt("cost"));         
                 dl.add(d);
             }
         } catch (Exception ex) {
             System.out.println(ex);
         } request.setAttribute("debts", dl);
-        
-//        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?";
-//
-//        List<Debts> dl2 = new ArrayList();
-//        try {
-//            Connection conn = DatabaseConnection.getConn();
-//            PreparedStatement ps = conn.prepareStatement(sql2);
-//
-//            ps.setString(1, u.getEmail());
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                Debts d = new Debts();
-//                d.setDebtId(rs.getInt("debt_id"));
-//                d.setDebtName(rs.getString("debt_name"));
-//                d.setDebtorMail(rs.getString("debtor_mail"));
-//                d.setDescription(rs.getString("description"));
-//                d.setCost(rs.getInt("cost"));
-//                dl2.add(d);
-//            }
-//
-//            request.setAttribute("collectors", dl2);
-//            
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//        }
-        
+
         if (u != null && u.getPassword().equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", u);

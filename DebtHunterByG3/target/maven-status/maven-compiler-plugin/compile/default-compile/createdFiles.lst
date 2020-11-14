@@ -16,9 +16,12 @@ Servlet\CollectorServlet.class
 Servlet\EditProfileServlet.class
 EntityController\exceptions\IllegalOrphanException.class
 EntityController\UsersJpaController.class
+EntityController\PaiddebtsJpaController.class
 Servlet\CostServlet.class
+Entity\Paiddebts_.class
 Entity\Users_.class
 Entity\Debts.class
+Entity\Paiddebts.class
 Servlet\AddUserToDBServlet.class
 Servlet\PaidServlet.class
 Servlet\MainServlet.class

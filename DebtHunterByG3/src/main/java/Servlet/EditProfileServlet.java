@@ -58,6 +58,7 @@ public class EditProfileServlet extends HttpServlet {
                 stm.setString(3, tel);
                 stm.setInt(4, u.getId());
                 stm.executeUpdate();
+                conn.close(); 
        
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +67,7 @@ public class EditProfileServlet extends HttpServlet {
         }
      
         session.setAttribute("user", u);
-        request.getRequestDispatcher("/Profile.jsp").forward(request, response);
+        request.getRequestDispatcher("Logout").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -10,11 +10,12 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import Entity.Paiddebts;
+import java.util.ArrayList;
+import java.util.List;
 import Entity.Debts;
 import Entity.Users;
 import EntityController.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -34,6 +35,9 @@ public class UsersJpaController implements Serializable {
     }
 
     public void create(Users users) {
+        if (users.getPaiddebtsList() == null) {
+            users.setPaiddebtsList(new ArrayList<Paiddebts>());
+        }
         if (users.getDebtsList() == null) {
             users.setDebtsList(new ArrayList<Debts>());
         }
@@ -41,6 +45,12 @@ public class UsersJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Paiddebts> attachedPaiddebtsList = new ArrayList<Paiddebts>();
+            for (Paiddebts paiddebtsListPaiddebtsToAttach : users.getPaiddebtsList()) {
+                paiddebtsListPaiddebtsToAttach = em.getReference(paiddebtsListPaiddebtsToAttach.getClass(), paiddebtsListPaiddebtsToAttach.getPaidId());
+                attachedPaiddebtsList.add(paiddebtsListPaiddebtsToAttach);
+            }
+            users.setPaiddebtsList(attachedPaiddebtsList);
             List<Debts> attachedDebtsList = new ArrayList<Debts>();
             for (Debts debtsListDebtsToAttach : users.getDebtsList()) {
                 debtsListDebtsToAttach = em.getReference(debtsListDebtsToAttach.getClass(), debtsListDebtsToAttach.getDebtId());
@@ -48,6 +58,15 @@ public class UsersJpaController implements Serializable {
             }
             users.setDebtsList(attachedDebtsList);
             em.persist(users);
+            for (Paiddebts paiddebtsListPaiddebts : users.getPaiddebtsList()) {
+                Users oldUsersIdOfPaiddebtsListPaiddebts = paiddebtsListPaiddebts.getUsersId();
+                paiddebtsListPaiddebts.setUsersId(users);
+                paiddebtsListPaiddebts = em.merge(paiddebtsListPaiddebts);
+                if (oldUsersIdOfPaiddebtsListPaiddebts != null) {
+                    oldUsersIdOfPaiddebtsListPaiddebts.getPaiddebtsList().remove(paiddebtsListPaiddebts);
+                    oldUsersIdOfPaiddebtsListPaiddebts = em.merge(oldUsersIdOfPaiddebtsListPaiddebts);
+                }
+            }
             for (Debts debtsListDebts : users.getDebtsList()) {
                 Users oldUsersIdOfDebtsListDebts = debtsListDebts.getUsersId();
                 debtsListDebts.setUsersId(users);
@@ -71,8 +90,17 @@ public class UsersJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Users persistentUsers = em.find(Users.class, users.getId());
+            List<Paiddebts> paiddebtsListOld = persistentUsers.getPaiddebtsList();
+            List<Paiddebts> paiddebtsListNew = users.getPaiddebtsList();
             List<Debts> debtsListOld = persistentUsers.getDebtsList();
             List<Debts> debtsListNew = users.getDebtsList();
+            List<Paiddebts> attachedPaiddebtsListNew = new ArrayList<Paiddebts>();
+            for (Paiddebts paiddebtsListNewPaiddebtsToAttach : paiddebtsListNew) {
+                paiddebtsListNewPaiddebtsToAttach = em.getReference(paiddebtsListNewPaiddebtsToAttach.getClass(), paiddebtsListNewPaiddebtsToAttach.getPaidId());
+                attachedPaiddebtsListNew.add(paiddebtsListNewPaiddebtsToAttach);
+            }
+            paiddebtsListNew = attachedPaiddebtsListNew;
+            users.setPaiddebtsList(paiddebtsListNew);
             List<Debts> attachedDebtsListNew = new ArrayList<Debts>();
             for (Debts debtsListNewDebtsToAttach : debtsListNew) {
                 debtsListNewDebtsToAttach = em.getReference(debtsListNewDebtsToAttach.getClass(), debtsListNewDebtsToAttach.getDebtId());
@@ -81,6 +109,23 @@ public class UsersJpaController implements Serializable {
             debtsListNew = attachedDebtsListNew;
             users.setDebtsList(debtsListNew);
             users = em.merge(users);
+            for (Paiddebts paiddebtsListOldPaiddebts : paiddebtsListOld) {
+                if (!paiddebtsListNew.contains(paiddebtsListOldPaiddebts)) {
+                    paiddebtsListOldPaiddebts.setUsersId(null);
+                    paiddebtsListOldPaiddebts = em.merge(paiddebtsListOldPaiddebts);
+                }
+            }
+            for (Paiddebts paiddebtsListNewPaiddebts : paiddebtsListNew) {
+                if (!paiddebtsListOld.contains(paiddebtsListNewPaiddebts)) {
+                    Users oldUsersIdOfPaiddebtsListNewPaiddebts = paiddebtsListNewPaiddebts.getUsersId();
+                    paiddebtsListNewPaiddebts.setUsersId(users);
+                    paiddebtsListNewPaiddebts = em.merge(paiddebtsListNewPaiddebts);
+                    if (oldUsersIdOfPaiddebtsListNewPaiddebts != null && !oldUsersIdOfPaiddebtsListNewPaiddebts.equals(users)) {
+                        oldUsersIdOfPaiddebtsListNewPaiddebts.getPaiddebtsList().remove(paiddebtsListNewPaiddebts);
+                        oldUsersIdOfPaiddebtsListNewPaiddebts = em.merge(oldUsersIdOfPaiddebtsListNewPaiddebts);
+                    }
+                }
+            }
             for (Debts debtsListOldDebts : debtsListOld) {
                 if (!debtsListNew.contains(debtsListOldDebts)) {
                     debtsListOldDebts.setUsersId(null);
@@ -126,6 +171,11 @@ public class UsersJpaController implements Serializable {
                 users.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The users with id " + id + " no longer exists.", enfe);
+            }
+            List<Paiddebts> paiddebtsList = users.getPaiddebtsList();
+            for (Paiddebts paiddebtsListPaiddebts : paiddebtsList) {
+                paiddebtsListPaiddebts.setUsersId(null);
+                paiddebtsListPaiddebts = em.merge(paiddebtsListPaiddebts);
             }
             List<Debts> debtsList = users.getDebtsList();
             for (Debts debtsListDebts : debtsList) {

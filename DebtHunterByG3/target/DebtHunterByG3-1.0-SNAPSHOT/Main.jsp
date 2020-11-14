@@ -12,7 +12,13 @@
         <title>Debt Hunter</title>
     </head>
     <body>
-        <h1>Welcome to Debt Hunter - <a href="Profile"> ${user.firstname} ${user.lastname} </a> </h1> 
+        <h1>Welcome to Debt Hunter - <a> ${user.firstname} ${user.lastname} </a> 
+        <form action="Profile" method="post">
+            <button type="submit" >Edit profile</button>
+            <input type="number" name="id" value="${user.getId()}" hidden="">
+        </form>
+        
+        </h1> 
         <h1>Collector</h1>
         <a href="AddDebt">Add+</a>
         <h1>Debtor</h1>

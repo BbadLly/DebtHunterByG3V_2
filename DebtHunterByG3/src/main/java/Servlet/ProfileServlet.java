@@ -5,9 +5,16 @@
  */
 package Servlet;
 
+import Database.DatabaseConnection;
+import Entity.Debts;
 import Entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +40,36 @@ public class ProfileServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
         HttpSession session = request.getSession() ;
         Users u = (Users) session.getAttribute("user") ;
-        
+//        String sql = "Select * from Users where id = ?" ;
+//
+//        List<Users> ul = new ArrayList();
+//        try {
+//            Connection conn = DatabaseConnection.getConn();
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//
+//            ps.setInt(1, u.getId());
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Users u1 = new Users();
+//                u1.setId(rs.getInt("id"));
+//                u1.setEmail(rs.getString("email"));
+//                u1.setFirstname(rs.getString("firstname"));
+//                u1.setLastname(rs.getString("lastname"));
+//                u1.setTel(rs.getString("tel"));
+//                ul.add(u);
+//            }
+//
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+//        
         request.setAttribute("user", u);
+        session.setAttribute("user", u);
+//        session.setAttribute("user", ul);
         request.getRequestDispatcher("/Profile.jsp").forward(request, response);
     }
 
