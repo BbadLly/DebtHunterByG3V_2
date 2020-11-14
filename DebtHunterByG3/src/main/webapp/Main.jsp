@@ -12,7 +12,7 @@
         <title>Debt Hunter</title>
     </head>
     <body>
-        <h1>Welcome to Debt Hunter - <a href="Profile"> ${profile.firstname} ${profile.lastname} </a> </h1> 
+        <h1>Welcome to Debt Hunter - <a href="Profile.jsp"> ${profile.firstname} ${profile.lastname} </a> </h1> 
         <h1>Collector</h1>
         <a href="AddDebt">Add+</a>
         
