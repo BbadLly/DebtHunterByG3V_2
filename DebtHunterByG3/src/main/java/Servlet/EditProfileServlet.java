@@ -14,6 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +42,9 @@ public class EditProfileServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        String userName = request.getParameter("email");
         HttpSession session = request.getSession() ;
         Users u = (Users) session.getAttribute("user") ;
         String fname = request.getParameter("firstname") ;
@@ -58,8 +64,8 @@ public class EditProfileServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        request.setAttribute("user", u);
+     
+        session.setAttribute("user", u);
         request.getRequestDispatcher("/Profile.jsp").forward(request, response);
     }
 

@@ -49,28 +49,16 @@ public class TestServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         Users u = (Users) session.getAttribute("user"); 
+       
 
         String sql1 = "Select * from Debts d WHERE USERS_ID = ?" ;
-        String sql2 = "Select debt_name, description, cost from Debts d WHERE Debtor_Mail = ?" ;
+//        String sql2 = "Select * from Debts d WHERE Debtor_Mail = ?" ;
         String sql = "Select * from Debts d";
-//        Query qry = em.createNativeQuery(sql) ;
-//
-//        List<Debts> dl = qry.getResultList() ;
-//        request.setAttribute("debts", dl);
+       
         List<Debts> dl = new ArrayList();
         try {
             Connection conn = DatabaseConnection.getConn();
             PreparedStatement ps = conn.prepareStatement(sql1);
-            
-//            for (Debts debts : dl) {
-//                ps.setInt(1, debts.getDebtId()) ;
-//                ps.setString(2, debts.getDebtName()) ;
-//                ps.setString(3, debts.getDebtorMail()) ;
-//                ps.setString(4, debts.getDescription()) ;
-//                ps.setInt(5, debts.getCost()) ;
-//                ResultSet rs = ps.executeQuery();
-//                dl.add(debts) ;
-//            }
             
             ps.setInt(1, u.getId());
             ResultSet rs = ps.executeQuery();
@@ -92,35 +80,6 @@ public class TestServlet extends HttpServlet {
             System.out.println(ex);
         }
         
-        try {
-            Connection conn = DatabaseConnection.getConn();
-            PreparedStatement ps = conn.prepareStatement(sql2);
-            
-//            for (Debts debts : dl) {
-//                ps.setInt(1, debts.getDebtId()) ;
-//                ps.setString(2, debts.getDebtName()) ;
-//                ps.setString(3, debts.getDebtorMail()) ;
-//                ps.setString(4, debts.getDescription()) ;
-//                ps.setInt(5, debts.getCost()) ;
-//                ResultSet rs = ps.executeQuery();
-//                dl.add(debts) ;
-//            }
-            Debts d = new Debts() ;            
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                d.setDebtName(rs.getString("debt_name"));
-                d.setDescription(rs.getString("description"));
-                d.setCost(rs.getInt("cost"));
-                ps.setString(1, d.getDebtorMail());  
-                dl.add(d);
-            }
-            
-                request.setAttribute("collectors", dl);
-                request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
 //            request.setAttribute("debts", dl);
 //            request.getRequestDispatcher("/WEB-INF/ShowBoard.jsp").forward(request, response); 
            
