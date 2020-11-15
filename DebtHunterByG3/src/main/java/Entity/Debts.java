@@ -41,7 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Debts.findByDebtorMail", query = "SELECT d FROM Debts d WHERE d.debtorMail = :debtorMail"),
     @NamedQuery(name = "Debts.findByDescription", query = "SELECT d FROM Debts d WHERE d.description = :description"),
     @NamedQuery(name = "Debts.findByCost", query = "SELECT d FROM Debts d WHERE d.cost = :cost"),
-    @NamedQuery(name = "Debts.findByDate", query = "SELECT d FROM Debts d WHERE d.date = :date")})
+    @NamedQuery(name = "Debts.findByDate", query = "SELECT d FROM Debts d WHERE d.date = :date"),
+    @NamedQuery(name = "Debts.findByCollectorMail", query = "SELECT d FROM Debts d WHERE d.collectorMail = :collectorMail"),
+    @NamedQuery(name = "Debts.findByIsDebtPaid", query = "SELECT d FROM Debts d WHERE d.isDebtPaid = :isDebtPaid")})
 public class Debts implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,6 +74,13 @@ public class Debts implements Serializable {
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Size(max = 40)
+    @Column(name = "COLLECTOR_MAIL")
+    private String collectorMail;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "IS_DEBT_PAID")
+    private Boolean isDebtPaid;
     @OneToMany(mappedBy = "debtsDebtId")
     private List<Paymenthistory> paymenthistoryList;
     @JoinColumn(name = "USERS_ID", referencedColumnName = "ID")
@@ -85,12 +94,13 @@ public class Debts implements Serializable {
         this.debtId = debtId;
     }
 
-    public Debts(Integer debtId, String debtName, String debtorMail, String description, int cost) {
+    public Debts(Integer debtId, String debtName, String debtorMail, String description, int cost, Boolean isDebtPaid) {
         this.debtId = debtId;
         this.debtName = debtName;
         this.debtorMail = debtorMail;
         this.description = description;
         this.cost = cost;
+        this.isDebtPaid = isDebtPaid;
     }
 
     public Integer getDebtId() {
@@ -139,6 +149,22 @@ public class Debts implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getCollectorMail() {
+        return collectorMail;
+    }
+
+    public void setCollectorMail(String collectorMail) {
+        this.collectorMail = collectorMail;
+    }
+
+    public Boolean getIsDebtPaid() {
+        return isDebtPaid;
+    }
+
+    public void setIsDebtPaid(Boolean isDebtPaid) {
+        this.isDebtPaid = isDebtPaid;
     }
 
     @XmlTransient

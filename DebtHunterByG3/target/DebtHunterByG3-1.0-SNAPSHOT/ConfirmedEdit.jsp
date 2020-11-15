@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:include page="EditProfile.jsp" /> 
+        <jsp:include page="Main.jsp" /> 
         <form action="EditProfile" method="POST">
         Password: <input type="password" name="password" required /> 
         </form>

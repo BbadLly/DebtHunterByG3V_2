@@ -24,7 +24,7 @@
 			<div class="inner">
 				<form action="AddToBoard" method="POST">
                              <div class="form-holder">
-						
+                                 
 						<input type="text" class="form-control" placeholder="Debtname" name="debtname"  value="" required/>
 					</div>
                                         <div class="form-holder">
@@ -44,6 +44,10 @@
                                         <div class="form-holder">
 						<label for="start">Within date!!</label>
                                             <input type="date" name="date" min="1999-01-01" max="2050-12-31"/>
+					</div>
+                                    <div class="form-holder">
+						
+                                            <input type="text" name="time" fvalue="" placeholder="hhmm" required/>
 					</div>
                                         
                                         <button type="submit" name="Accept">

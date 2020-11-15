@@ -66,7 +66,7 @@
 						<span>Register</span>
 					</button>
 				</form>               
-                                <img src="Regis/images/image-2.png" alt="" class="image-2">
+                                
 			</div>
 			
 		</div>

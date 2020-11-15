@@ -81,6 +81,7 @@ public class TestServlet extends HttpServlet {
 //        for (Debts debts : dl) {
                 request.setAttribute("collectors", dl);
                 request.getRequestDispatcher("/ShowBoard.jsp").forward(request, response);
+//                request.getRequestDispatcher("/Main.jsp").forward(request, response);
             
 //        }
     }

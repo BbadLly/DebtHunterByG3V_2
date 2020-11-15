@@ -8,6 +8,8 @@ package Servlet;
 import Database.DatabaseConnection;
 import Entity.Debts;
 import Entity.Users;
+import static Entity.Users_.email;
+import Model.SendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -17,6 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -25,7 +30,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 
 /**
  *
@@ -44,27 +48,55 @@ public class AddToBoardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_DebtHunterByG3_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
         String debtName = request.getParameter("debtname");
         String debtMail = request.getParameter("email");
         String description = request.getParameter("description");
         String c = request.getParameter("cost");
         String da = request.getParameter("date");
-        Date date = Date.valueOf(da) ;
+//        String ti = request.getParameter("time")
+        
+        
+        
+        
+        
+        String t = request.getParameter("time");
+        Calendar c1 = Calendar.getInstance();
+        c1.set(Calendar.HOUR_OF_DAY, 19);
+        c1.set(Calendar.MINUTE, Integer.valueOf(t));
+        c1.set(Calendar.SECOND, 00);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                SendMail sm = new SendMail();
+//                sm.sendEmail("gridpong01@gmail.com", "name",Integer.valueOf("time"));
+                System.out.println("------!!!!!!!!!!!!Done!!!!!!!!!!!!!--------");
+                //setEmail(emailContent, subject);
+            }
+        }, c1.getTime(), 86400000);
+
+        
+        
+        
+        
+        
+        
+        
+        Date date = Date.valueOf(da);
         int cost = Integer.parseInt(c);
 //        Users u = em.createQuery("SELECT u from Users u WHERE u.email = :email", Users.class)
 //                .setParameter("email", debtMail).getSingleResult() ;        
         HttpSession session = request.getSession();
         Users u = (Users) session.getAttribute("user");
         if (u != null) {
-              String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST, USERS_ID, DATE) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST, USERS_ID, DATE) VALUES (?, ?, ?, ?, ?, ?)";
 //            String sql = "INSERT INTO DEBTS (DEBT_NAME, DEBTOR_MAIL, DESCRIPTION, COST) VALUES (?, ?, ?, ?)";
             Debts d = new Debts();
-            
-            
-            try ( Connection conn = DatabaseConnection.getConn();  
-                    PreparedStatement stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            try ( Connection conn = DatabaseConnection.getConn();  PreparedStatement stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 stm.setString(1, debtName);
                 stm.setString(2, debtMail);
                 stm.setString(3, description);

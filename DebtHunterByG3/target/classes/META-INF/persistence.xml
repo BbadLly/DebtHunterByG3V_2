@@ -4,6 +4,9 @@
     <class>Entity.Paymenthistory</class>
     <class>Entity.Users</class>
     <class>Entity.Debts</class>
+    <class>Database.Paymenthistory</class>
+    <class>Database.Debts</class>
+    <class>Entity.Paiddebts</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/DebtHunter"/>

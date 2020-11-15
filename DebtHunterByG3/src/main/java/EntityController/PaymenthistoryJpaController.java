@@ -19,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author GuideKai
+ * @author KaiNiYam
  */
 public class PaymenthistoryJpaController implements Serializable {
 

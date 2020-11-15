@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Paymenthistory.findAll", query = "SELECT p FROM Paymenthistory p"),
     @NamedQuery(name = "Paymenthistory.findByPaymentId", query = "SELECT p FROM Paymenthistory p WHERE p.paymentId = :paymentId"),
-    @NamedQuery(name = "Paymenthistory.findByCost", query = "SELECT p FROM Paymenthistory p WHERE p.cost = :cost")})
+    @NamedQuery(name = "Paymenthistory.findByCost", query = "SELECT p FROM Paymenthistory p WHERE p.cost = :cost"),
+    @NamedQuery(name = "Paymenthistory.findByPreCost", query = "SELECT p FROM Paymenthistory p WHERE p.preCost = :preCost")})
 public class Paymenthistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,9 +42,12 @@ public class Paymenthistory implements Serializable {
     private Integer paymentId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 40)
     @Column(name = "COST")
-    private String cost;
+    private int cost;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRE_COST")
+    private int preCost;
     @JoinColumn(name = "DEBTS_DEBT_ID", referencedColumnName = "DEBT_ID")
     @ManyToOne
     private Debts debtsDebtId;
@@ -56,9 +59,10 @@ public class Paymenthistory implements Serializable {
         this.paymentId = paymentId;
     }
 
-    public Paymenthistory(Integer paymentId, String cost) {
+    public Paymenthistory(Integer paymentId, int cost, int preCost) {
         this.paymentId = paymentId;
         this.cost = cost;
+        this.preCost = preCost;
     }
 
     public Integer getPaymentId() {
@@ -69,12 +73,20 @@ public class Paymenthistory implements Serializable {
         this.paymentId = paymentId;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public int getPreCost() {
+        return preCost;
+    }
+
+    public void setPreCost(int preCost) {
+        this.preCost = preCost;
     }
 
     public Debts getDebtsDebtId() {

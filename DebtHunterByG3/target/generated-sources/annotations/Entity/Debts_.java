@@ -8,17 +8,19 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-11-13T18:07:49")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-11-15T18:10:08")
 @StaticMetamodel(Debts.class)
 public class Debts_ { 
 
     public static volatile SingularAttribute<Debts, Date> date;
+    public static volatile SingularAttribute<Debts, String> collectorMail;
     public static volatile SingularAttribute<Debts, String> debtName;
     public static volatile SingularAttribute<Debts, Integer> cost;
     public static volatile SingularAttribute<Debts, String> debtorMail;
     public static volatile SingularAttribute<Debts, Users> usersId;
     public static volatile SingularAttribute<Debts, String> description;
     public static volatile SingularAttribute<Debts, Integer> debtId;
+    public static volatile SingularAttribute<Debts, Boolean> isDebtPaid;
     public static volatile ListAttribute<Debts, Paymenthistory> paymenthistoryList;
 
 }
